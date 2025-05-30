@@ -14,6 +14,9 @@ if (PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
   )
 endif ()
 
+# ---- Add dependencies with CPM ----
+include(cmake/CPM.cmake)
+
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
