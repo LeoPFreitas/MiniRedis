@@ -1,3 +1,4 @@
+### C++ template
 # Prerequisites
 *.d
 
@@ -31,20 +32,8 @@
 *.out
 *.app
 
-### C++ template
-# Prerequisites
-
-# Compiled Object files
-
-# Precompiled Headers
-
-# Compiled Dynamic libraries
-
-# Fortran module files
-
-# Compiled Static libraries
-
-# Executables
+# Cmake Build files
+cmake-build*
 
 ### CMake template
 CMakeLists.txt.user
@@ -60,14 +49,13 @@ CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
 
-### Example user template template
-### Example user template
-
+### User template
 # IntelliJ project files
 .idea
 *.iml
 out
 gen
+
 ### macOS template
 # General
 .DS_Store
@@ -96,3 +84,17 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+### Linux template
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
