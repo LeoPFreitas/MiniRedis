@@ -26,3 +26,45 @@ if (NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
   message(STATUS "Setting build type to '${CMAKE_BUILD_TYPE}' as none was specified.")
 endif ()
+
+# ---- Set output directories ----
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+# ---- Library configuration ----
+add_library(${PROJECT_NAME})
+add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+# ---- Add header files ----
+target_sources(${PROJECT_NAME}
+    PUBLIC
+    FILE_SET HEADERS
+    BASE_DIRS include
+    FILES
+    include/miniredis/miniredis.hpp
+)
+
+# ---- Add source files ----
+target_sources(${PROJECT_NAME}
+    PRIVATE
+    src/miniredis.cpp
+)
+
+# ---- Set library properties ----
+set_target_properties(${PROJECT_NAME}
+    PROPERTIES
+    CXX_STANDARD 23
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+    EXPORT_NAME ${PROJECT_NAME}
+)
+
+# ---- Set include directories ----
+target_include_directories(${PROJECT_NAME}
+    PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}>
+)
