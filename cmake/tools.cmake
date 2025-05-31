@@ -89,7 +89,16 @@ endif ()
 # Format checking with clang-format
 if (USE_FORMAT)
   CPMAddPackage("gh:TheLartians/Format.cmake@1.8.3")
-  add_format_target(${PROJECT_NAME})
+
+  find_program(CMAKE_FORMAT_PROGRAM cmake-format)
+  if (NOT CMAKE_FORMAT_PROGRAM)
+    message(WARNING "cmake-format not found. Format targets will not be available. Please install cmake-format to enable formatting.")
+  elseif (NOT GIT_FOUND)
+    message(STATUS "Git executable: ${GIT_EXECUTABLE}")
+    find_program(GIT_EXECUTABLE git)
+  else ()
+    add_format_target(${PROJECT_NAME})
+  endif ()
 endif ()
 
 # Version checking for critical tools
