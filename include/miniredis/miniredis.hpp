@@ -2,8 +2,7 @@
 // Created by Leonardo Freitas on 30/05/25.
 //
 
-#ifndef MINIREDIS_HPP
-#define MINIREDIS_HPP
+#pragma once
 
 #include <optional>
 #include <string>
@@ -51,5 +50,3 @@ namespace miniredis
     void cleanUpExpired();
 
 }
-
-#endif //MINIREDIS_HPP
