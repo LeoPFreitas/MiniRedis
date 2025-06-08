@@ -80,8 +80,8 @@ if (BUILD_TESTS)
   CPMAddPackage(
       NAME GTest
       GITHUB_REPOSITORY google/googletest
-      GIT_TAG release-1.12.1
-      VERSION 1.12.1
+      GIT_TAG v1.17.0
+      VERSION 1.17.0
       OPTIONS "INSTALL_GTEST OFF" "gtest_force_shared_crt"
   )
 
