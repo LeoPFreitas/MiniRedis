@@ -3,32 +3,18 @@
 //
 
 #include <miniredis/miniredis.hpp>
-#include <chrono>
-#include <unordered_map>
-#include <mutex>
 
 namespace miniredis
 {
-    namespace
-    {
-        struct Entry
-        {
-            int value{};
-            bool hasExpire{};
-            std::chrono::steady_clock::time_point expireTime;
-        };
 
-        std::unordered_map<std::string, Entry> store;
-        std::mutex storeMutex; // Add thread safety
-    }
 
-    void set(const std::string& key, const int value)
+    void MiniRedis::set(const std::string& key, const int value)
     {
         std::lock_guard lock(storeMutex);
         store[key] = Entry{value, false, std::chrono::steady_clock::time_point{}};
     }
 
-    std::optional<int> get(const std::string& key)
+    std::optional<int> MiniRedis::get(const std::string& key)
     {
         std::lock_guard lock(storeMutex);
         const auto it = store.find(key);
@@ -45,13 +31,13 @@ namespace miniredis
         return value;
     }
 
-    bool del(const std::string& key)
+    bool MiniRedis::del(const std::string& key)
     {
         std::lock_guard lock(storeMutex);
         return store.erase(key) > 0;
     }
 
-    bool expire(const std::string& key, int ttlSeconds)
+    bool MiniRedis::expire(const std::string& key, int ttlSeconds)
     {
         std::lock_guard lock(storeMutex);
         const auto it = store.find(key);
@@ -69,7 +55,7 @@ namespace miniredis
         return true;
     }
 
-    void cleanUpExpired()
+    void MiniRedis::cleanUpExpired()
     {
         std::lock_guard lock(storeMutex);
         const auto now = std::chrono::steady_clock::now();
@@ -86,4 +72,5 @@ namespace miniredis
             }
         }
     }
-}
+
+} // namespace miniredis
