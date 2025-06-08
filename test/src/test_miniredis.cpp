@@ -22,7 +22,7 @@ TEST(MiniRedisTest, SetOperation)
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(result.value(), 100);
 
-    // Test set with negative value
+    // Test set with a negative value
     miniredis::set("negative_key", -50);
     result = miniredis::get("negative_key");
     ASSERT_TRUE(result.has_value());

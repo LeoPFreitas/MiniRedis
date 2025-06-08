@@ -70,5 +70,29 @@ target_include_directories(${PROJECT_NAME}
 )
 
 # --- Import tools ----
-
 include(cmake/tools.cmake)
+
+# ---- Tests ----
+option(BUILD_TESTS "Build the tests" ON)
+
+if (BUILD_TESTS)
+  # Add GTest
+  CPMAddPackage(
+      NAME GTest
+      GITHUB_REPOSITORY google/googletest
+      GIT_TAG release-1.12.1
+      VERSION 1.12.1
+      OPTIONS "INSTALL_GTEST OFF" "gtest_force_shared_crt"
+  )
+
+  # Create test executable
+  file(GLOB test_sources CONFIGURE_DEPENDS test/src/*.cpp)
+  add_executable(MiniRedisTests ${test_sources})
+  target_link_libraries(MiniRedisTests PRIVATE GTest::gtest_main ${PROJECT_NAME}::${PROJECT_NAME})
+  set_target_properties(MiniRedisTests PROPERTIES CXX_STANDARD 23)
+
+  # Enable testing
+  enable_testing()
+  include(GoogleTest)
+  gtest_discover_tests(MiniRedisTests)
+endif ()
