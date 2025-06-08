@@ -11,7 +11,7 @@ TEST(MiniRedisTest, WhenSettingKeyThenValueCanBeRetrieved)
     redis.set("test_key", 42);
 
     // Then
-    auto result = redis.get("test_key");
+    const auto result = redis.get("test_key");
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(result.value(), 42);
 }
@@ -26,7 +26,7 @@ TEST(MiniRedisTest, WhenOverwritingExistingKeyThenValueIsUpdated)
     redis.set("test_key", 100);
 
     // Then
-    auto result = redis.get("test_key");
+    const auto result = redis.get("test_key");
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(result.value(), 100);
 }
@@ -61,7 +61,7 @@ TEST(MiniRedisTest, WhenSettingKeyAfterExpirationThenTTLIsReset)
     std::this_thread::sleep_for(std::chrono::milliseconds(1100));
 
     // Then
-    auto result = redis.get("ttl_key");
+    const auto result = redis.get("ttl_key");
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(result.value(), 456);
 }
