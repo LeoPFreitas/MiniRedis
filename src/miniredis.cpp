@@ -2,8 +2,7 @@
 // Created by Leonardo Freitas on 30/05/25.
 //
 
-#include "../include/miniredis/miniredis.hpp"
-
+#include <miniredis/miniredis.hpp>
 #include <chrono>
 #include <unordered_map>
 #include <mutex>
